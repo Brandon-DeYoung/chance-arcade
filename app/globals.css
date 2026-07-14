@@ -60,6 +60,7 @@ button:disabled{cursor:not-allowed}
 .app-notice span{flex:1}.app-notice button{width:1.8rem;height:1.8rem;border:2px solid var(--ink);border-radius:.3rem;background:#fff;color:var(--ink);font-weight:900}
 .empty-roster{width:max-content;max-width:100%;margin:.65rem auto 0!important;padding:.45rem .65rem;border:2px solid #8f3650;border-radius:.4rem;background:#fff0f3;color:#6c1830!important;font-size:.66rem!important;font-weight:900}
 .roster-add:disabled{opacity:.45}
+.roster-tools .roster-remove-all{border-color:#8f3650;background:#ffdde5;color:#6c1830;box-shadow:0 3px #8f3650}.roster-tools button:disabled{opacity:.45;cursor:not-allowed}
 .is-presenting .standings{width:min(22rem,33vw)}
 .is-presenting .standings span{font-size:.78rem}.is-presenting .standings small,.is-presenting .standings>div>time{font-size:.62rem}
 .is-presenting .winner-toast{width:min(22rem,calc(100% - 2rem))}.is-presenting .winner-toast div b{font-size:1.05rem}.is-presenting .winner-toast div small{font-size:.68rem}

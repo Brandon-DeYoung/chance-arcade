@@ -1,6 +1,6 @@
 # Random Selector Game Room
 
-A local, browser-based random selector for meetings and streams. Spin the **Wheel of Deals** or race up to 100 portrait marbles through the physics-based **Marble Pursuit** course. It includes a roster editor, level editor, presentation mode, local placeholder portraits, and no backend.
+A local, browser-based random selector for meetings and streams. Spin the **Decision Wheel** or race up to 100 portrait marbles through the physics-based **Marble Pursuit** course. It includes a roster editor, level editor, presentation mode, local placeholder portraits, and no backend.
 
 Everything runs on your computer. After the first dependency install, the games do not need internet access.
 
@@ -31,8 +31,8 @@ npm start
 
 ## Use the games
 
-- Choose **Edit Roster** to add people, change names or nicknames, add portrait paths, and unselect anyone who should not appear.
-- Choose **Wheel of Deals**, then select **Spin the Wheel** or drag the wheel with a pointer.
+- Choose **Edit Roster** to add people, change names or nicknames, add portrait paths, and unselect anyone who should not appear. It can also generate a unique random name and placeholder portrait, or clear the entire draft roster before you rebuild or import it.
+- Choose **Decision Wheel**, then select **Spin the Wheel** or drag the wheel with a pointer.
 - Choose **Marble Pursuit**, then select **Release Marbles** or press `Space`.
 - In a race, the first finisher wins, but the simulation continues so later places can finish. Select **Leaderboard** after the race for every recorded time.
 - Choose **Present** or press `P` to hide editing controls and enter a cleaner broadcast view.

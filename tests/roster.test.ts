@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createDefaultRosterDocument } from "../app/default-roster";
-import { buildRaceRoster, parseRoster, parseRosterDocument, serializeRoster } from "../app/members";
+import { buildRaceRoster, createRandomMember, parseRoster, parseRosterDocument, PLACEHOLDER_PORTRAITS, RANDOM_NAME_PARTS, serializeRoster } from "../app/members";
 
 test("default roster contains fictional sample people and local placeholders", () => {
   const roster = createDefaultRosterDocument();
@@ -40,4 +40,19 @@ test("course tests can expand a smaller roster to 100 neutral marbles", () => {
   assert.equal(racers[0].name, "Sample Person");
   assert.equal(racers[99].name, "Test Marble 100");
   assert.equal(buildRaceRoster([{ name: "Sample Person" }], 150).length, 100);
+});
+
+test("random people use two different supplied name parts and a bundled portrait", () => {
+  const first = createRandomMember([], () => 0);
+  assert.equal(first.name, "Abbott Avery");
+  assert.equal(first.image, PLACEHOLDER_PORTRAITS[0]);
+  const [given, family] = first.name.split(" ");
+  assert.ok(RANDOM_NAME_PARTS.includes(given as never));
+  assert.ok(RANDOM_NAME_PARTS.includes(family as never));
+  assert.notEqual(given, family);
+});
+
+test("random people never duplicate an existing generated name", () => {
+  const existing = [{ name: "Abbott Avery" }];
+  assert.equal(createRandomMember(existing, () => 0).name, "Abbott Bailey");
 });

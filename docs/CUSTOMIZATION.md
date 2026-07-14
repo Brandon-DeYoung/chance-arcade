@@ -10,7 +10,7 @@ The app has three portable customization surfaces: interface wording, roster fil
 {
   "mainMenu": {
     "eyebrow": "RANDOM SELECTOR",
-    "titleFirstLine": "Who’s up next?",
+    "titleFirstLine": "Up next!",
     "titleSecondLine": "Let chance decide."
   },
   "wheelScreen": {

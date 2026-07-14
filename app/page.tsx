@@ -23,15 +23,21 @@ const LEGACY_ROSTER_STORAGE_KEY = "wheel-deals-game-room-roster";
 const TEXT_STORAGE_KEY = "random-selector-game-room-text-v3";
 const bundledRoster = createDefaultRosterDocument();
 
-export const mergeUiText = (saved: Partial<UiText>): UiText => ({
-  mainMenu: {
-    ...defaultUiText.mainMenu,
-    ...saved.mainMenu,
-    wheel: { ...defaultUiText.mainMenu.wheel, ...saved.mainMenu?.wheel },
-    marbles: { ...defaultUiText.mainMenu.marbles, ...saved.mainMenu?.marbles },
-  },
-  wheelScreen: { ...defaultUiText.wheelScreen, ...saved.wheelScreen },
-});
+export const mergeUiText = (saved: Partial<UiText>): UiText => {
+  const merged: UiText = {
+    mainMenu: {
+      ...defaultUiText.mainMenu,
+      ...saved.mainMenu,
+      wheel: { ...defaultUiText.mainMenu.wheel, ...saved.mainMenu?.wheel },
+      marbles: { ...defaultUiText.mainMenu.marbles, ...saved.mainMenu?.marbles },
+    },
+    wheelScreen: { ...defaultUiText.wheelScreen, ...saved.wheelScreen },
+  };
+  if (merged.mainMenu.titleFirstLine === "Who’s up next?") merged.mainMenu.titleFirstLine = "Up next!";
+  if (merged.mainMenu.wheel.name === "Wheel of Deals") merged.mainMenu.wheel.name = "Decision Wheel";
+  if (merged.wheelScreen.wheelLabel === "Random name Wheel of Deals picker") merged.wheelScreen.wheelLabel = "Random name Decision Wheel picker";
+  return merged;
+};
 
 export default function Home() {
   const [level, setLevel] = useState<Level>(() => createDefaultLevel());

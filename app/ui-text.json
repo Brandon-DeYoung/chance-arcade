@@ -1,7 +1,7 @@
 {
   "mainMenu": {
     "eyebrow": "RANDOM SELECTOR",
-    "titleFirstLine": "Who’s up next?",
+    "titleFirstLine": "Up next!",
     "titleSecondLine": "Let chance decide.",
     "subtitle": "Choose a game, add your roster, and let chance decide.",
     "editRosterButton": "EDIT ROSTER",
@@ -9,7 +9,7 @@
     "unselectedLabel": "unselected",
     "wheel": {
       "kicker": "Classic picker",
-      "name": "Wheel of Deals",
+      "name": "Decision Wheel",
       "action": "Spin the wheel"
     },
     "marbles": {
@@ -36,7 +36,7 @@
     "flapperPanelHeading": "FLAPPER LENGTH",
     "flapperLengthLabel": "Length",
     "flapperHelp": "Changes both the visible flapper and its collision reach.",
-    "wheelLabel": "Random name Wheel of Deals picker",
+    "wheelLabel": "Random name Decision Wheel picker",
     "dragInstruction": "Drag to spin.",
     "dismissWinnerLabel": "Dismiss winner celebration"
   }

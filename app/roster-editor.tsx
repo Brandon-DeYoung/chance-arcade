@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MAX_ROSTER_MEMBERS, parseRoster, parseRosterDocument, serializeRoster, type Member } from "./members";
+import { createRandomMember, MAX_ROSTER_MEMBERS, parseRoster, parseRosterDocument, serializeRoster, type Member } from "./members";
 import { Profile } from "./profile";
 
 type DraftMember = Member & { key: string; eligible: boolean };
@@ -54,6 +54,21 @@ export function RosterEditor({ members, excluded, onApply, onClose }: { members:
     try { setRows(importedDraft(await file.text())); setMessage(`${file.name} imported. Review the roster, then save.`); }
     catch (error) { setMessage(error instanceof Error ? error.message : "The roster could not be imported."); }
   };
+  const removeAll = () => {
+    if (!window.confirm("Remove everyone from the roster? This takes effect when you save.")) return;
+    setRows([]);
+    setMessage("Roster cleared. Add at least one person before saving.");
+  };
+  const addRandom = () => {
+    if (rows.length >= MAX_ROSTER_MEMBERS) return;
+    try {
+      const member = createRandomMember(rows);
+      setRows((current) => [...current, { ...member, key: key(), eligible: true }]);
+      setMessage(`${member.name} added with a random portrait.`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "A random person could not be added.");
+    }
+  };
 
   return <div className="roster-backdrop" role="presentation">
     <section ref={dialog} className="roster-editor" role="dialog" aria-modal="true" aria-labelledby="roster-title" tabIndex={-1}>
@@ -61,6 +76,8 @@ export function RosterEditor({ members, excluded, onApply, onClose }: { members:
       <div className="roster-tools">
         <button onClick={() => setRows((current) => current.map((row) => ({ ...row, eligible: true })))}>SELECT ALL</button>
         <button onClick={() => setRows((current) => current.map((row) => ({ ...row, eligible: false })))}>UNSELECT ALL</button>
+        <button onClick={addRandom} disabled={rows.length >= MAX_ROSTER_MEMBERS}>ADD RANDOM PERSON</button>
+        <button className="roster-remove-all" onClick={removeAll} disabled={!rows.length}>REMOVE ALL PEOPLE</button>
         <button onClick={() => importInput.current?.click()}>IMPORT JSON</button>
         <button onClick={() => downloadRoster(rows)}>EXPORT JSON</button>
         <input ref={importInput} type="file" accept="application/json,.json" onChange={(event) => { void importFile(event.target.files?.[0]); event.currentTarget.value = ""; }} />
@@ -72,7 +89,7 @@ export function RosterEditor({ members, excluded, onApply, onClose }: { members:
         <label><span>Full name</span><input value={row.name} placeholder="Full name" onChange={(event) => update(row.key, { name: event.target.value })}/></label>
         <label><span>Nickname</span><input value={row.nickname ?? ""} placeholder="Optional" onChange={(event) => update(row.key, { nickname: event.target.value })}/></label>
         <label><span>Image</span><input value={row.image ?? ""} placeholder="/profiles/photo.jpg" onChange={(event) => update(row.key, { image: event.target.value })}/></label>
-        <button className="roster-remove" onClick={() => setRows((current) => current.filter((entry) => entry.key !== row.key))} disabled={rows.length === 1} aria-label={`Remove ${row.name || "new person"}`}>REMOVE</button>
+        <button className="roster-remove" onClick={() => setRows((current) => current.filter((entry) => entry.key !== row.key))} aria-label={`Remove ${row.name || "new person"}`}>REMOVE</button>
       </div>)}</div>
       <button className="roster-add" disabled={rows.length >= MAX_ROSTER_MEMBERS} onClick={() => setRows((current) => [...current, { key: key(), name: "", nickname: "", image: "", eligible: true }])}>＋ ADD PERSON</button>
       {message && <p className="roster-message" role="status">{message}</p>}

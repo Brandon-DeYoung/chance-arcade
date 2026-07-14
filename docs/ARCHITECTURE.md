@@ -6,7 +6,7 @@ Random Selector Game Room is a static React application built by Vite. It has no
 
 ```text
 default-roster.json ─┐
-browser localStorage ├─> page.tsx ─> eligible roster ─┬─> Wheel of Deals
+browser localStorage ├─> page.tsx ─> eligible roster ─┬─> Decision Wheel
 roster import/export ┘                                └─> Marble Pursuit
 
 default-level.json ─────> page.tsx ─> Level Editor ─────> Race physics

@@ -10,6 +10,40 @@ export type ParsedRoster = { members: Member[]; excluded: Set<string> };
 export const MAX_RACE_MARBLES = 100;
 export const MAX_ROSTER_MEMBERS = 100;
 
+export const RANDOM_NAME_PARTS = [
+  "Abbott", "Avery", "Bailey", "Barrett", "Beckett", "Bellamy", "Blair", "Blake", "Brooks",
+  "Cameron", "Carson", "Carter", "Casey", "Chase", "Cooper", "Dallas", "Davis", "Ellis",
+  "Emerson", "Finley", "Flynn", "Gordon", "Graham", "Grant", "Gray", "Harper", "Hayes",
+  "Hunter", "Jordan", "Kendall", "Kennedy", "Lane", "Lee", "Lennon", "Lincoln", "Logan",
+  "Mason", "Miller", "Morgan", "Palmer", "Parker", "Quinn", "Reed", "Reese", "Riley",
+  "Rowan", "Taylor", "Vance", "Walker", "West",
+] as const;
+
+export const PLACEHOLDER_PORTRAITS = [
+  "/portraits/avatar-blue.svg",
+  "/portraits/avatar-coral.svg",
+  "/portraits/avatar-gold.svg",
+  "/portraits/avatar-green.svg",
+  "/portraits/avatar-purple.svg",
+  "/portraits/avatar-teal.svg",
+] as const;
+
+export function createRandomMember(existing: Member[], random: () => number = Math.random): Member {
+  const existingNames = new Set(existing.map((member) => member.name.trim().toLocaleLowerCase()));
+  const availableNames: string[] = [];
+  for (const first of RANDOM_NAME_PARTS) {
+    for (const last of RANDOM_NAME_PARTS) {
+      if (first === last) continue;
+      const fullName = `${first} ${last}`;
+      if (!existingNames.has(fullName.toLocaleLowerCase())) availableNames.push(fullName);
+    }
+  }
+  if (!availableNames.length) throw new Error("Every generated name combination is already in the roster.");
+  const nameIndex = Math.min(availableNames.length - 1, Math.floor(Math.max(0, random()) * availableNames.length));
+  const portraitIndex = Math.min(PLACEHOLDER_PORTRAITS.length - 1, Math.floor(Math.max(0, random()) * PLACEHOLDER_PORTRAITS.length));
+  return { name: availableNames[nameIndex], image: PLACEHOLDER_PORTRAITS[portraitIndex] };
+}
+
 export function buildRaceRoster(members: Member[], requestedCount: number): Member[] {
   const count = Math.max(1, Math.min(MAX_RACE_MARBLES, Math.round(requestedCount)));
   const racers = members.slice(0, count);
