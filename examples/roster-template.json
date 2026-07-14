@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Alex North",
+    "nickname": "Alex",
+    "image": "/portraits/alex-north.jpg",
+    "eligible": true
+  },
+  {
+    "name": "Casey River",
+    "nickname": "Casey",
+    "image": "/portraits/casey-river.png",
+    "eligible": false
+  },
+  {
+    "name": "Jordan Vale",
+    "eligible": true
+  }
+]

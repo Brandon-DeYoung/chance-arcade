@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Production and tool output
+dist/
+coverage/
+.gstack/
+.wrangler/
+*.tsbuildinfo
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local exports and archives
+exports/
+*.zip

@@ -1,0 +1,14 @@
+[
+  { "name": "Alex North", "nickname": "Alex", "image": "/portraits/avatar-coral.svg", "eligible": true },
+  { "name": "Casey River", "nickname": "Casey", "image": "/portraits/avatar-blue.svg", "eligible": true },
+  { "name": "Drew Harbor", "nickname": "Drew", "image": "/portraits/avatar-gold.svg", "eligible": true },
+  { "name": "Jordan Vale", "nickname": "Jordan", "image": "/portraits/avatar-green.svg", "eligible": true },
+  { "name": "Morgan Pine", "nickname": "Morgan", "image": "/portraits/avatar-purple.svg", "eligible": true },
+  { "name": "Riley Stone", "nickname": "Riley", "image": "/portraits/avatar-teal.svg", "eligible": true },
+  { "name": "Sam Meadow", "nickname": "Sam", "image": "/portraits/avatar-coral.svg", "eligible": true },
+  { "name": "Taylor Lake", "nickname": "Taylor", "image": "/portraits/avatar-blue.svg", "eligible": true },
+  { "name": "Quinn Sky", "nickname": "Quinn", "image": "/portraits/avatar-gold.svg", "eligible": true },
+  { "name": "Jamie Field", "nickname": "Jamie", "image": "/portraits/avatar-green.svg", "eligible": true },
+  { "name": "Cameron Reed", "nickname": "Cam", "eligible": true },
+  { "name": "Robin West", "nickname": "Robin", "eligible": true }
+]

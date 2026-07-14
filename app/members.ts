@@ -1,0 +1,91 @@
+export type Member = {
+  name: string;
+  nickname?: string;
+  image?: string;
+};
+
+export type RosterEntry = Member & { eligible: boolean };
+export type ParsedRoster = { members: Member[]; excluded: Set<string> };
+
+export const MAX_RACE_MARBLES = 100;
+export const MAX_ROSTER_MEMBERS = 100;
+
+export function buildRaceRoster(members: Member[], requestedCount: number): Member[] {
+  const count = Math.max(1, Math.min(MAX_RACE_MARBLES, Math.round(requestedCount)));
+  const racers = members.slice(0, count);
+  while (racers.length < count) racers.push({ name: `Test Marble ${racers.length + 1}` });
+  return racers;
+}
+
+function parseJson(raw: string): unknown {
+  try {
+    return JSON.parse(raw) as unknown;
+  } catch {
+    throw new Error("The roster is not valid JSON. Check for missing commas or quotation marks.");
+  }
+}
+
+export function parseRosterDocument(raw: string): ParsedRoster {
+  const parsed = parseJson(raw);
+  if (parsed && typeof parsed === "object" && !Array.isArray(parsed) && "version" in parsed) {
+    const version = (parsed as { version?: unknown }).version;
+    if (version !== 1) throw new Error("This roster file uses an unsupported version.");
+  }
+
+  const rows = Array.isArray(parsed)
+    ? parsed
+    : parsed && typeof parsed === "object" && "members" in parsed
+      ? (parsed as { members: unknown }).members
+      : null;
+
+  if (!Array.isArray(rows) || !rows.length) {
+    throw new Error("The roster must contain at least one person.");
+  }
+  if (rows.length > MAX_ROSTER_MEMBERS) {
+    throw new Error(`The roster supports up to ${MAX_ROSTER_MEMBERS} people.`);
+  }
+
+  const excluded = new Set<string>();
+  const members = rows.map((row, index): Member => {
+    if (typeof row === "string") {
+      const name = row.trim();
+      if (!name) throw new Error(`Roster row ${index + 1} needs a name.`);
+      if (name.length > 120) throw new Error(`Roster row ${index + 1} has a name longer than 120 characters.`);
+      return { name };
+    }
+    if (!row || typeof row !== "object") throw new Error(`Roster row ${index + 1} is invalid.`);
+    const entry = row as Record<string, unknown>;
+    const name = typeof entry.name === "string" ? entry.name.trim() : "";
+    if (!name) throw new Error(`Roster row ${index + 1} needs a name.`);
+    if (name.length > 120) throw new Error(`Roster row ${index + 1} has a name longer than 120 characters.`);
+    const nickname = typeof entry.nickname === "string" && entry.nickname.trim() ? entry.nickname.trim() : undefined;
+    const image = typeof entry.image === "string" && entry.image.trim() ? entry.image.trim() : undefined;
+    if (nickname && nickname.length > 80) throw new Error(`Roster row ${index + 1} has a nickname longer than 80 characters.`);
+    if (image && image.length > 2_048) throw new Error(`Roster row ${index + 1} has an image path that is too long.`);
+    if (entry.eligible === false) excluded.add(name);
+    return { name, nickname, image };
+  });
+
+  const names = new Set<string>();
+  for (const member of members) {
+    const key = member.name.toLocaleLowerCase();
+    if (names.has(key)) throw new Error(`Duplicate roster name: ${member.name}`);
+    names.add(key);
+  }
+  return { members, excluded };
+}
+
+export function parseRoster(raw: string): Member[] {
+  return parseRosterDocument(raw).members;
+}
+
+export function serializeRoster(members: Member[], excluded = new Set<string>()): string {
+  const entries: RosterEntry[] = members.map((member) => ({
+    ...member,
+    eligible: !excluded.has(member.name),
+  }));
+  return JSON.stringify({ version: 1, members: entries }, null, 2);
+}
+
+export const displayName = (member: Member) => member.nickname || member.name;
+export const initials = (name: string) => name.split(" ").filter(Boolean).slice(0, 2).map((part) => part[0]).join("");

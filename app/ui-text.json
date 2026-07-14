@@ -1,0 +1,43 @@
+{
+  "mainMenu": {
+    "eyebrow": "RANDOM SELECTOR",
+    "titleFirstLine": "Who’s up next?",
+    "titleSecondLine": "Let chance decide.",
+    "subtitle": "Choose a game, add your roster, and let chance decide.",
+    "editRosterButton": "EDIT ROSTER",
+    "eligibleLabel": "eligible",
+    "unselectedLabel": "unselected",
+    "wheel": {
+      "kicker": "Classic picker",
+      "name": "Wheel of Deals",
+      "action": "Spin the wheel"
+    },
+    "marbles": {
+      "kicker": "Physics race",
+      "name": "Marble Pursuit",
+      "action": "Start the race"
+    }
+  },
+  "wheelScreen": {
+    "backButton": "← Game Menu",
+    "eyebrow": "RANDOM SELECTOR",
+    "headlineStart": "Let the",
+    "headlineEmphasis": "wheel",
+    "headlineEnd": "choose",
+    "promptFirstLine": "Give it a spin.",
+    "promptSecondLine": "One random name will be selected.",
+    "spinButton": "SPIN THE WHEEL",
+    "spinningButton": "SPINNING…",
+    "eligibleSuffix": "eligible participants",
+    "winnerBanner": "THE GAME HAS SPOKEN",
+    "flapperToggleLabel": "Show or hide flapper length control",
+    "flapperToggleTitle": "Adjust flapper length",
+    "flapperPanelLabel": "Flapper length control",
+    "flapperPanelHeading": "FLAPPER LENGTH",
+    "flapperLengthLabel": "Length",
+    "flapperHelp": "Changes both the visible flapper and its collision reach.",
+    "wheelLabel": "Random name Wheel of Deals picker",
+    "dragInstruction": "Drag to spin.",
+    "dismissWinnerLabel": "Dismiss winner celebration"
+  }
+}
