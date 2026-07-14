@@ -19,6 +19,9 @@ import { selectPositionBoard } from "./standings";
 type Leader = { member: Member; y: number; color: string; time: number };
 type FinishResult = { member: Member; color: string; time: number };
 
+export const WINNER_TOAST_HOLD_MS = 5_000;
+export const WINNER_TOAST_EXIT_MS = 450;
+
 type RaceGameProps = {
   level: Level;
   onEdit: () => void;
@@ -44,6 +47,8 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
 
   const [racing, setRacing] = useState(false);
   const [winner, setWinner] = useState<Member | null>(null);
+  const [showWinnerToast, setShowWinnerToast] = useState(false);
+  const [winnerToastExiting, setWinnerToastExiting] = useState(false);
   const [results, setResults] = useState<FinishResult[]>([]);
   const [leaders, setLeaders] = useState<Leader[]>([]);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -126,6 +131,16 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
   }, [draw, imageRevision, racing]);
 
   useEffect(() => {
+    if (!winner) return;
+    const exitTimer = window.setTimeout(() => setWinnerToastExiting(true), WINNER_TOAST_HOLD_MS);
+    const hideTimer = window.setTimeout(() => setShowWinnerToast(false), WINNER_TOAST_HOLD_MS + WINNER_TOAST_EXIT_MS);
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, [winner]);
+
+  useEffect(() => {
     const handle = (event: KeyboardEvent) => {
       const target = event.target;
       const isEditing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || (target instanceof HTMLElement && target.isContentEditable);
@@ -143,6 +158,8 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
     if (frame.current !== null) cancelAnimationFrame(frame.current);
     finishIds.current.clear();
     setWinner(null);
+    setShowWinnerToast(false);
+    setWinnerToastExiting(false);
     setResults([]);
     setRaceComplete(false);
     setShowLeaderboard(false);
@@ -195,6 +212,8 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
         setResults((current) => [...current, ...finishResults]);
         if (finishIds.current.size === newFinishers.length) {
           setWinner(finishResults[0].member);
+          setShowWinnerToast(true);
+          setWinnerToastExiting(false);
           setRaceNumber((value) => value + 1);
         }
       }
@@ -247,6 +266,8 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
     setRacing(false);
     setCountdown(null);
     setWinner(null);
+    setShowWinnerToast(false);
+    setWinnerToastExiting(false);
     setResults([]);
     setRaceComplete(false);
     setShowLeaderboard(false);
@@ -272,7 +293,7 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
     </header>
     <section className="race-stage" aria-label={`${level.name} marble race`}>
       <canvas ref={canvas} aria-label={`${racers.length} portrait marbles racing with physics`} />
-      <div className="course-card"><span>ACTIVE COURSE</span><h1>{level.name}</h1><small>{level.height.toLocaleString()}PX · {level.spinners.length} SPINNERS · 120HZ</small><button onClick={reset}>↻ RESET RACE</button></div>
+      <div className="course-card"><span>ACTIVE COURSE</span><h1>{level.name}</h1><button onClick={reset}>↻ RESET RACE</button></div>
       <div className="race-count"><span className={racing ? "live" : ""}/><b>{racers.length}</b><small>MARBLES</small></div>
       <aside className="standings" aria-label="Race positions"><h2>POSITION <time>TIME</time></h2>{standings.map((entry, index) => <div className={results.length && index === 3 ? "chasing" : ""} key={entry.member.name}><b>{entry.place}</b><i style={{ background: entry.color }}/><span>{displayName(entry.member)}<small>{entry.detail}</small></span><time>{entry.time ? formatTime(entry.time) : "--:--.--"}</time></div>)}</aside>
       {countdown !== null && <div className={`countdown ${countdown === 0 ? "go" : ""}`} aria-live="assertive">{countdown === 0 ? "GO!" : countdown}</div>}
@@ -280,7 +301,7 @@ export function RaceGame({ level, onEdit, onBack, members, participantCount, pre
       <div className="depth"><span style={{ height: `${depth}%` }}/><b>START</b><i>FINISH</i></div>
       {showLeaderboard && <div className="leaderboard-backdrop"><section className="leaderboard-modal" role="dialog" aria-modal="true" aria-label="Final race leaderboard"><header><div><span>FINAL RESULTS</span><h2>RACE LEADERBOARD</h2></div><button onClick={() => setShowLeaderboard(false)} aria-label="Close leaderboard">×</button></header><div className="leaderboard-list">{results.map((result, index) => <div key={result.member.name}><b>{index + 1}</b><Profile member={result.member}/><span>{displayName(result.member)}</span><time>{formatTime(result.time)}</time></div>)}</div></section></div>}
     </section>
-    {winner && <aside className="winner-toast" aria-live="polite"><button onClick={() => setWinner(null)} aria-label="Dismiss winner">×</button><Profile member={winner}/><div><span>FIRST PLACE</span><b>{displayName(winner)}</b><small>{raceComplete ? `Won in ${formatTime(results[0]?.time ?? 0)} · View the full leaderboard.` : "Race continues for the remaining places."}</small></div></aside>}
+    {winner && showWinnerToast && <aside className={`winner-toast ${winnerToastExiting ? "is-exiting" : ""}`} aria-live="polite"><button onClick={() => setShowWinnerToast(false)} aria-label="Dismiss winner">×</button><Profile member={winner}/><div><span>FIRST PLACE</span><b>{displayName(winner)}</b><small>{raceComplete ? `Won in ${formatTime(results[0]?.time ?? 0)} · View the full leaderboard.` : "Race continues for the remaining places."}</small></div></aside>}
   </main>;
 }
 

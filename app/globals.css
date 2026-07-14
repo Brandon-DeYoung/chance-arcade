@@ -64,6 +64,7 @@ button:disabled{cursor:not-allowed}
 .is-presenting .standings{width:min(22rem,33vw)}
 .is-presenting .standings span{font-size:.78rem}.is-presenting .standings small,.is-presenting .standings>div>time{font-size:.62rem}
 .is-presenting .winner-toast{width:min(22rem,calc(100% - 2rem))}.is-presenting .winner-toast div b{font-size:1.05rem}.is-presenting .winner-toast div small{font-size:.68rem}
+.winner-toast{transition:transform .45s cubic-bezier(.55,.05,.8,.2),opacity .35s ease-in;will-change:transform,opacity}.winner-toast.is-exiting{opacity:0;pointer-events:none;transform:translate(calc(-100% - 2rem),-50%)}
 
 @media(max-height:760px) and (min-width:901px){.game-room{padding:.75rem 1rem}.room-hero{margin-bottom:.7rem}.room-hero h1{margin:.35rem 0;font-size:clamp(2.6rem,5vw,4.4rem)}.room-hero>p:not(.room-eyebrow){font-size:.78rem}.room-actions .room-roster,.room-actions button{margin-top:.55rem}.game-card-copy{padding:1.25rem}.game-card{border-radius:1.4rem}.mini-wheel{transform:translate(-50%,-42%) scale(.8)}.mini-marbles{transform:rotate(-8deg) scale(.72)}}
 @media(max-width:1050px){.is-presenting .standings{width:min(18rem,35vw)}.course-card{max-width:15rem}.course-card h1{font-size:1.25rem}}
