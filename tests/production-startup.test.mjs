@@ -21,7 +21,7 @@ test("production preview starts and serves the application", { timeout: 15_000 }
   }
   const response = await fetch(`http://127.0.0.1:${port}/`);
   assert.equal(response.status, 200);
-  assert.match(await response.text(), /Random Selector Game Room/);
+  assert.match(await response.text(), /Chance Arcade/);
   child.kill("SIGTERM");
   await once(child, "exit");
 });

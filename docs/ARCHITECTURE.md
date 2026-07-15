@@ -1,6 +1,6 @@
 # Architecture
 
-Random Selector Game Room is a static React application built by Vite. It has no server data, accounts, database, telemetry, or runtime network dependency. The browser owns game state, canvas animation, local persistence, and JSON import/export.
+Chance Arcade is a static React application built by Vite. It has no server data, accounts, database, telemetry, or runtime network dependency. The browser owns game state, canvas animation, local persistence, and JSON import/export.
 
 ## Data flow
 

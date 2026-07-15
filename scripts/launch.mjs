@@ -33,6 +33,6 @@ if (!installed) {
 console.log("\nBuilding the local presentation app…\n");
 run(["run", "build"]);
 
-console.log("\nStarting Random Selector Game Room at http://127.0.0.1:4173");
+console.log("\nStarting Chance Arcade at http://127.0.0.1:4173");
 console.log("Press Ctrl+C in this window when you are finished.\n");
 run(["run", "preview", "--", "--port", "4173", "--strictPort"]);

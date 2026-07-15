@@ -18,9 +18,10 @@ type Screen = "lobby" | "wheel" | "marbles" | "edit";
 type UiText = typeof defaultUiText;
 type SavedRoster = { members?: unknown; excluded?: unknown };
 
-const ROSTER_STORAGE_KEY = "random-selector-game-room-roster-v1";
-const LEGACY_ROSTER_STORAGE_KEY = "wheel-deals-game-room-roster";
-const TEXT_STORAGE_KEY = "random-selector-game-room-text-v3";
+const ROSTER_STORAGE_KEY = "chance-arcade-roster-v1";
+const LEGACY_ROSTER_STORAGE_KEY = "random-selector-game-room-roster-v1";
+const TEXT_STORAGE_KEY = "chance-arcade-text-v1";
+const LEGACY_TEXT_STORAGE_KEY = "random-selector-game-room-text-v3";
 const bundledRoster = createDefaultRosterDocument();
 
 export const mergeUiText = (saved: Partial<UiText>): UiText => {
@@ -33,9 +34,6 @@ export const mergeUiText = (saved: Partial<UiText>): UiText => {
     },
     wheelScreen: { ...defaultUiText.wheelScreen, ...saved.wheelScreen },
   };
-  if (merged.mainMenu.titleFirstLine === "Who’s up next?") merged.mainMenu.titleFirstLine = "Up next!";
-  if (merged.mainMenu.wheel.name === "Wheel of Deals") merged.mainMenu.wheel.name = "Decision Wheel";
-  if (merged.wheelScreen.wheelLabel === "Random name Wheel of Deals picker") merged.wheelScreen.wheelLabel = "Random name Decision Wheel picker";
   return merged;
 };
 
@@ -83,9 +81,20 @@ export default function Home() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      const saved = readLocalJson<Partial<UiText>>(TEXT_STORAGE_KEY);
+      const current = readLocalJson<Partial<UiText>>(TEXT_STORAGE_KEY);
+      const saved = current.value ? current : readLocalJson<Partial<UiText>>(LEGACY_TEXT_STORAGE_KEY);
       if (saved.error) setNotice(saved.error);
-      if (saved.value) setUiText(mergeUiText(saved.value));
+      if (saved.value) {
+        const next = mergeUiText(saved.value);
+        if (!current.value) {
+          next.mainMenu.titleFirstLine = defaultUiText.mainMenu.titleFirstLine;
+          next.mainMenu.wheel.name = defaultUiText.mainMenu.wheel.name;
+          next.wheelScreen.wheelLabel = defaultUiText.wheelScreen.wheelLabel;
+          const error = writeLocalJson(TEXT_STORAGE_KEY, next);
+          if (error) setNotice(error);
+        }
+        setUiText(next);
+      }
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);

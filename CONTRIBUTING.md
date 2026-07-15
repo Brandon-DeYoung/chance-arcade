@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for improving Random Selector Game Room. Keep changes local-first, dependency-light, and safe to share publicly.
+Thanks for improving Chance Arcade. Keep changes local-first, dependency-light, and safe to share publicly.
 
 ## Development setup
 

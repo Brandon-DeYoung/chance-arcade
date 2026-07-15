@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("production build is a portable browser application", async () => {
   const html = await readFile(new URL("../dist/index.html", import.meta.url), "utf8");
-  assert.match(html, /<title>Random Selector Game Room<\/title>/i);
+  assert.match(html, /<title>Chance Arcade<\/title>/i);
   assert.match(html, /<div id="root"><\/div>/);
   assert.match(html, /assets\/index-.*\.js/);
   assert.match(html, /assets\/index-.*\.css/);

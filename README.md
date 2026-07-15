@@ -1,4 +1,4 @@
-# Random Selector Game Room
+# Chance Arcade
 
 A local, browser-based random selector for meetings and streams. Spin the **Decision Wheel** or race up to 100 portrait marbles through the physics-based **Marble Pursuit** course. It includes a roster editor, level editor, presentation mode, local placeholder portraits, and no backend.
 

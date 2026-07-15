@@ -20,7 +20,7 @@ The app has three portable customization surfaces: interface wording, roster fil
 }
 ```
 
-Keep every existing key. The application safely merges older saved browser text with newly added defaults, but the checked-in JSON must be complete. In-app red-dot editors save to local storage under `random-selector-game-room-text-v3`.
+Keep every existing key. The application safely merges older saved browser text with newly added defaults, but the checked-in JSON must be complete. In-app red-dot editors save to local storage under `chance-arcade-text-v1`.
 
 After editing the file, use `npm run dev` for live reload or restart `npm start` to rebuild the production app.
 
@@ -59,7 +59,7 @@ The app accepts 1–100 members. It also accepts a raw member array and a simple
 
 Broken paths use an initials fallback. Remote URLs require internet access, so local files are recommended for offline meetings.
 
-The in-app roster is stored under `random-selector-game-room-roster-v1`. Export before clearing browser data or moving to another machine.
+The in-app roster is stored under `chance-arcade-roster-v1`. Export before clearing browser data or moving to another machine.
 
 ## Level files
 
