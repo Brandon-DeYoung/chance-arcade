@@ -28,3 +28,7 @@ Thumbs.db
 # Local exports and archives
 exports/
 *.zip
+
+# Private local portraits
+public/profiles/*
+!public/profiles/.gitkeep
