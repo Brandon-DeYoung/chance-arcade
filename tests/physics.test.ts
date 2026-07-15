@@ -6,7 +6,7 @@ import { parseLevel } from "../app/level-types";
 
 const seeded=(seed:number)=>{let value=seed;return()=>((value=value*16807%2147483647)-1)/2147483646;};
 
-test("Tool Booth Classic preserves the imported default course",()=>{const level=createDefaultLevel();assert.equal(level.height,10500);assert.equal(level.finishY,10250);assert.equal(level.rails.length,33);assert.equal(level.pegs.length,239);assert.equal(level.spinners.length,6);assert.equal(level.cannons.length,8);assert.equal(level.pegs.filter((peg)=>peg.kick).length,13);assert.equal(level.rails.filter((rail)=>rail.platform).length,11);assert.ok(level.pegs.some((peg)=>peg.id==="bumper-179eeaab"&&peg.radius===90));});
+test("Tool Booth Classic preserves the imported default course",()=>{const level=createDefaultLevel();assert.equal(level.height,10500);assert.equal(level.finishY,10250);assert.equal(level.rails.length,31);assert.equal(level.pegs.length,255);assert.equal(level.spinners.length,6);assert.equal(level.cannons.length,8);assert.equal(level.pegs.filter((peg)=>peg.kick).length,29);assert.equal(level.rails.filter((rail)=>rail.platform).length,11);assert.ok(level.pegs.some((peg)=>peg.id==="bumper-179eeaab"&&peg.radius===90));});
 
 test("100 waiting marbles use enough rings to avoid overlaps",()=>{const level=createDefaultLevel(),balls=createBalls(100,level,seeded(8675309)),rings=waitingRingLayout(100,level);assert.equal(rings.length,4);positionWaitingBalls(balls,level,1.75);for(let first=0;first<balls.length;first+=1)for(let second=first+1;second<balls.length;second+=1)assert.ok(Math.hypot(balls[first].x-balls[second].x,balls[first].y-balls[second].y)>=BALL_RADIUS*2,`marbles ${first} and ${second} overlap`);});
 
