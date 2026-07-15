@@ -4,6 +4,16 @@ A local, browser-based random selector for meetings and streams. Spin the **Deci
 
 Everything runs on your computer. After the first dependency install, the games do not need internet access.
 
+## See it in action
+
+### Decision Wheel
+
+![The Decision Wheel spinning through a roster of colorful participant slices](docs/media/decision-wheel-demo.gif)
+
+### Marble Pursuit
+
+![Portrait marbles leaving the starting chamber and racing into the Tool Booth Classic course](docs/media/marble-pursuit-demo.gif)
+
 ## Quick start
 
 ### 1. Install Node.js
