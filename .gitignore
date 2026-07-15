@@ -32,3 +32,6 @@ exports/
 # Private local portraits
 public/profiles/*
 !public/profiles/.gitkeep
+
+# Private local roster files
+private-rosters/
